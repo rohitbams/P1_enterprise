@@ -57,7 +57,8 @@ class Ship {
         if (this.health < 1) {
             stage = 2;
         }
-        console.log(this.health);
+        // port.write("s");
+        // console.log(this.health);
     }
 
     shootProjectile() {

@@ -14,11 +14,11 @@
 
 
 
-let length = 180;
+// let length = 180;
 let ship;
-let projectile;
+// let projectile;
 let difficulty = 5;
-let colours;
+// let colours;
 let stars = [];
 let starSpeed;
 
@@ -35,12 +35,12 @@ let milliseconds = 0;
 let seconds = 0;
 
 let speedBar = 0;
-let gravity = 5;
-let force = 0;
+// let gravity = 5;
+// let force = 0;
 let speed = 10;
-let mass;
-let acceleration = 1 / mass * force;
-let deceleration = 0.70;
+// let mass;
+// let acceleration = 1 / mass * force;
+// let deceleration = 0.70;
 
 let enterprise;
 let enterpriseMenu;
@@ -77,7 +77,7 @@ function setup() {
     textSize(20);
 
     ship = new Ship(50, 150, 0);
-    projectile = new Projectile();
+    // projectile = new Projectile();
 
     for (let i = 0; i < 800; i++) {
         stars[i] = new Star();
@@ -97,46 +97,46 @@ function connectBtnClick() {
 }
 
 function menu() {
-    push();
+{   push();
     textAlign(CENTER);
     fill(43, 83, 167);
     textFont(font);
     textSize(28);
     text("Starship Enterprise", 0, -280)
-    pop();
+    pop();}
 
-    push();
+{   push();
     textAlign(CENTER);
     fill(167,19,19);
     textFont(font);
     text(" Press any button on your Micro:bit or \n click anywhere on the screen to start game", 0, -230);
-    pop();
+    pop();}
 
-    push();
+{   push();
     textAlign(CENTER);
     fill(214, 164, 68);
     textFont(font);
     textSize(18);
     text("Objective: avoid the energy blasts", 0, -160);
-    pop();
+    pop();}
 
-    push();
+{   push();
     textAlign(CENTER);
     fill(193,199,48);
     textFont(font);
     textSize(16);
     text("Controls: \n\n Press A to accelarate \nPress B to decelerate", 0, -110);
-    pop();
+    pop();}
     
-    push();
+{   push();
     image(enterpriseMenu, -220, -40, 550 / 1.2, 414 / 1.2);
-    pop();
+    pop();}
 
     let str = port.read();
     if (str.length > 0) {
         if (mouseIsPressed == true || str.includes("a") || str.includes("b")) {
             stage = 1;
-            console.log(stage);
+            // console.log(stage);
         }
         port.clear();
     }
@@ -151,7 +151,7 @@ function menu() {
 
 function readMicroBit() {
     let str = port.read();
-    console.log(str);
+    // console.log(str);
     if (str.length > 0) {
         if (str.includes("a")) {
             ship.speedUp();
@@ -171,10 +171,8 @@ function readMicroBit() {
         if (str.includes("y") && !str.includes("-")) {
             ship.moveUpDown(0.12);
         }
-
         port.clear();
     }
-
 }
 
 function drawStars() {
@@ -284,26 +282,27 @@ function controls() {
     // controls
     readMicroBit();
 
-    {    // if (keyIsDown(LEFT_ARROW)) {
-        //     ship.moveSideways(-1);
-        // }
-        // if (keyIsDown(RIGHT_ARROW)) {
-        //     ship.moveSideways(1);
-        // }
+    {    
+        if (keyIsDown(LEFT_ARROW)) {
+            ship.moveSideways(-1);
+        }
+        if (keyIsDown(RIGHT_ARROW)) {
+            ship.moveSideways(1);
+        }
 
-        // if (keyIsDown(UP_ARROW)) {
-        //     ship.moveUpDown(-1);
-        // }
-        // if (keyIsDown(DOWN_ARROW)) {
-        //     ship.moveUpDown(1);
-        // }
+        if (keyIsDown(UP_ARROW)) {
+            ship.moveUpDown(-1);
+        }
+        if (keyIsDown(DOWN_ARROW)) {
+            ship.moveUpDown(1);
+        }
 
-        // if (keyIsDown(83)) { 
-        //     ship.slowDown();
-        // }
-        // if (keyIsDown(87)) {
-        //     ship.speedUp();
-        // }
+        if (keyIsDown(83)) { 
+            ship.slowDown();
+        }
+        if (keyIsDown(87)) {
+            ship.speedUp();
+        }
     }
 }
 
@@ -319,13 +318,13 @@ function controls() {
 
 function gameOver() {
     // stage = 0;
-    push();
+{   push();
     textAlign(CENTER);
     fill('red');
     textFont(font);
     text("You Lost! \n Press any button on your Micro:bit or \n click anywhere on the screen to play again", 0, 0);
     pop();
-    ship.health = 100;
+    ship.health = 100;}
     // seconds = 0
 
 
@@ -338,12 +337,6 @@ function gameOver() {
         }
         port.clear();
     }
-    // if (startGameButton.mouseIsPressed == true) {
-    //     stage = 1;
-    //     game();
-    //     //console.log(stage);
-    // }
-    // draw game over message
 }
 
 function draw() {
@@ -358,7 +351,7 @@ function draw() {
 
     if (mouseIsPressed == true) {
         stage = 1;
-        console.log(stage);
+        // console.log(stage);
     }
 
     if (stage == 0) {
