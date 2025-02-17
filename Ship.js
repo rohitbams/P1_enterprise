@@ -9,7 +9,7 @@ class Ship {
         this.sidewaysSpeed = 10;
         this.upDownSpeed = 5;
         this.health = 100;
-        this.phaser;
+        //this.projectile;
         // this.acceleration = 1/this.mass * force;
         // this.mass = 10;
         // this.velocity = this.z / deltaTime;
@@ -50,8 +50,8 @@ class Ship {
         }
     }
 
-    shootPhaser() {
-            phaser = new Phaser();
+    shootProjectile() {
+            projectile.show();
     }
 
     die() {

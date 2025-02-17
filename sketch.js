@@ -10,12 +10,13 @@
 // add first person view?
 // add shields for taking damage
 // add micro:bit sound for enemy hit and shoots
+// make the blocks come to you even if the ship is stationary
 
 
 
 let length = 180;
 let ship;
-let phaser;
+let projectile;
 let difficulty = 5;
 let colours;
 let stars = [];
@@ -69,6 +70,7 @@ function setup() {
     startGameButton = createButton("Start Game");
 
     ship = new Ship(50, 150, 0);
+    projectile = new Projectile();
 
     for (let i = 0; i < 800; i++) {
         stars[i] = new Star();
@@ -180,9 +182,11 @@ function game() {
     if (keyIsDown(87)) {
         ship.speedUp();
     }
+    
+   
 
     // if (keyIsDown(81)) {
-    //     ship.shootPhaser();
+    //     ship.shootProjectile();
     // }
 
     // camera
@@ -193,11 +197,12 @@ function game() {
     push();
     ship.run();
     pop();
+
 }
 
 function keyPressed() {
     if (keyCode === 81){
-        ship.shootPhaser();
+        ship.shootProjectile();
     }
 }
 
@@ -220,7 +225,11 @@ function draw() {
     if (stage == 1) {
         game();
     }
-
+    // if (keyIsDown(81)) {
+    //     ship.shootProjectile();
+    // }
+    
+    // projectile.show();
 
 
 }
