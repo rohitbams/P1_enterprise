@@ -17,8 +17,8 @@ class Ship {
     }
     speedUp() {
         // add warp speed!!!
-        for (let i = 0; i < 12; i++) {
-            if (speedBar < 240) {
+        for (let i = 0; i < 24; i++) {
+            if (speedBar < 360) {
                 speedBar = (speedBar + 1);
             }
             ship.speed = speedBar;

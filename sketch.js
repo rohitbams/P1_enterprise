@@ -96,11 +96,6 @@ function connectBtnClick() {
     }
 }
 
-function sendBtnClick() {
-    port.write("Hello from p5.js\n");
-}
-
-
 function menu() {
     push();
     textAlign(CENTER);
@@ -331,6 +326,8 @@ function gameOver() {
     text("You Lost! \n Press any button on your Micro:bit or \n click anywhere on the screen to play again", 0, 0);
     pop();
     ship.health = 100;
+    // seconds = 0
+
 
     let str = port.read();
     if (str.length > 0) {
