@@ -14,23 +14,35 @@ function Block() {
       }
     }
   
+
+
     this.show = function() {
-      fill(170);
+
+      let blueValue = map(this.z, 75, 0, 5 , 255); // fix this to make it 
+      let redValue = 83; // fix this to make it   
+      let greenValue = 48;
+
       //noStroke();
-  
+
       let sx = map(this.x / this.z, 0, 1, 0, 75);
       let sy = map(this.y / this.z, 0, 1, 0, 75);
   
       let r = map(this.z, 0, 75, 2, 0);
+
+      fill(redValue, greenValue, blueValue);
       ellipse(sx, sy, r*40, r*40);
   
-      let px = map(this.x / this.prevZ, 0, 1, 0, 75);
-      let py = map(this.y / this.prevZ, 0, 1, 0, 75);
-  
       this.prevZ = this.z;
-  
-      stroke(255);
-      line(px, py, sx, sy);
+
+      // console.log("sx: " + sx);
+      // console.log("sy: " + sy);
+      // console.log("px: " + px);
+      // console.log("py: " + py);    
+      
+      //let px = map(this.x / this.prevZ, 0, 1, 0, 75);
+      //let py = map(this.y / this.prevZ, 0, 1, 0, 75);
+      //stroke(255);
+      //line(px, py, sx, sy);
   
     }
   }

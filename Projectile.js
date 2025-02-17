@@ -4,6 +4,12 @@ function Projectile() {
         this.z = ship.z;
         this.prevZ = this.z;
     
+        this.remove = function() {
+            this.x = ship.x;
+            this.y = ship.y;
+            this.z = ship.z;
+            fill(13);
+        }
 
     this.show = function() {
         fill('blue');

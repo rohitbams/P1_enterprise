@@ -33,7 +33,7 @@ class Ship {
         }
     }
     run() {
-        this.z = this.z - this.speed;
+       // this.z = this.z - this.speed;
     }
     moveSideways(direction) {
         this.x += this.sidewaysSpeed * direction;
@@ -43,11 +43,11 @@ class Ship {
     }
     
     takeDamage() {
-        if (flyingBlock.z == this.z && flyingBlock.x == this.x && flyingBlock.y == this.y) {
-            this.health = this.health - 10;
-            health = this.health;
+        //console.log("ship x, y: " + ship.x + " " + ship.y);
+        //console.log("block x, y: " + block.x + " " + block.y);
+        this.health = this.health - 10;
+            //health = this.health;
             console.log(this.health);
-        }
     }
 
     shootProjectile() {
@@ -66,7 +66,8 @@ class Ship {
         normalMaterial();
         // ambientMaterial(255);
         // stroke(1);
-        
+    
+
         translate(this.x, this.y, this.z);
         rotateX(135);
         brightness('white');

@@ -27,7 +27,9 @@ let health;
 
 let blocks = [];
 let blockSpeed; // random speed for different blocks
-let flyingBlock;
+let block;
+let blockX, blockY, blockZ;
+
 
 let time = 0;
 let milliseconds = 0;
@@ -63,7 +65,11 @@ function preload() {
 }
 
 function setup() {
+    // coordinate plane
+    // (-x,-y) | (x,-y)
+    // (-x, y) | (x, y)
     createCanvas(800, 800, WEBGL);
+    debugMode();
     //port = createSerial();
     textSize(20);
 
@@ -127,12 +133,25 @@ function game() {
         for (let i = 0; i < blocks.length; i++) {
             blocks[i].update();
             blocks[i].show();
-            flyingBlock = blocks[i];
+            block = blocks[i];
+
+            blockX = int(block.x);
+            blockY = int(block.y);
+            blockZ = int(blockZ);
+
+
+            if (
+                blockX >= ship.x - 10 && blockX <= ship.x + 10 &&
+                blockY >= ship.y - 10 && blockY  <= ship.y + 10 ) {
+                    ship.takeDamage();
+                    //block.changeColour();
+            }
+            
         }
         pop();
-        ship.takeDamage();
-
     }
+
+
 
     // // health bar text
     push();
@@ -203,6 +222,9 @@ function game() {
 function keyPressed() {
     if (keyCode === 81){
         ship.shootProjectile();
+        if (projectile.y < 300) {
+            projectile.remove();
+        }
     }
 }
 
