@@ -8,6 +8,8 @@ class Ship {
         this.speed = 0;
         this.sidewaysSpeed = 10;
         this.upDownSpeed = 5;
+        this.health = 100;
+        this.phaser;
         // this.acceleration = 1/this.mass * force;
         // this.mass = 10;
         // this.velocity = this.z / deltaTime;
@@ -38,6 +40,24 @@ class Ship {
     }
     moveUpDown(direction) {
         this.y += this.upDownSpeed * direction;
+    }
+    
+    takeDamage() {
+        if (flyingBlock.z == this.z && flyingBlock.x == this.x && flyingBlock.y == this.y) {
+            this.health = this.health - 10;
+            health = this.health;
+            console.log(this.health);
+        }
+    }
+
+    shootPhaser() {
+            phaser = new Phaser();
+    }
+
+    die() {
+        if (ship.health == 0) {
+            gameOver();
+        }
     }
 
     render() {

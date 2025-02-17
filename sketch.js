@@ -9,15 +9,24 @@
 // add warp speed!!!
 // add first person view?
 // add shields for taking damage
+// add micro:bit sound for enemy hit and shoots
 
 
 
 let length = 180;
 let ship;
+let phaser;
 let difficulty = 5;
 let colours;
 let stars = [];
 let starSpeed;
+
+let score;
+let health;
+
+let blocks = [];
+let blockSpeed; // random speed for different blocks
+let flyingBlock;
 
 let time = 0;
 let milliseconds = 0;
@@ -37,8 +46,11 @@ let nacelles;
 let saucer;
 let shipAux;
 
-let font;
+let stage = 0;
+let startGameButton;
 
+let port;
+let font;
 
 function preload() {
     font = loadFont("assets/LeagueMono-Regular.otf");
@@ -47,32 +59,55 @@ function preload() {
     nacelles = loadImage("assets/enterprise/Bake_Nacelles.png");
     saucer = loadImage("assets/enterprise/Bake_Saucer.png");
     shipAux = loadImage("assets/enterprise/Bake_ShipAux.png");
-}   
+}
 
 function setup() {
     createCanvas(800, 800, WEBGL);
-    //textFont(font);
+    //port = createSerial();
     textSize(20);
-    // makeTiles(difficulty);
+
+    startGameButton = createButton("Start Game");
+
     ship = new Ship(50, 150, 0);
-    //ship.jump();
-    for (var i = 0; i < 800; i++) {
+
+    for (let i = 0; i < 800; i++) {
         stars[i] = new Star();
     }
-}
-
-function keyPressed() {
-    if (key === " ") {
-        ship.jump();
+    // if stage/difficulty 1, blocks[].length is 1, then higher
+    for (let i = 0; i < 1; i++) {
+        blocks[i] = new Block();
     }
 }
 
-function draw() {
-    background(13);
-    lights();
-    
+
+
+function menu() {
     push();
-    starSpeed = map(speedBar*2, 0, width, 0, 50);
+    textAlign(CENTER);
+    fill('white');
+    textFont(font);
+    text("Click the button to start game", -30, 0);
+    push();
+    if (startGameButton.mouseIsPressed == true) {
+        stage = 1;
+        console.log(stage);
+    }
+}
+
+{
+    // function mousePressed() {
+    //     microBitConnect();
+    // }
+}
+
+function microBitReceivedMessage(message) {
+
+}
+
+function game() {
+    // stars
+    push();
+    starSpeed = map(speedBar * 2, 0, width, 0, 50);
     translate(0, 0);
     for (let i = 0; i < stars.length; i++) {
         stars[i].update();
@@ -80,19 +115,43 @@ function draw() {
     }
     pop();
 
-    // speed bar
+
+    //console.log
+    //blocks
+    if (time > 12) {
+        push();
+        blockSpeed = map(speedBar / 2, 0, width * 2, 0, 50);
+        translate(0, 0);
+        for (let i = 0; i < blocks.length; i++) {
+            blocks[i].update();
+            blocks[i].show();
+            flyingBlock = blocks[i];
+        }
+        pop();
+        ship.takeDamage();
+
+    }
+
+    // // health bar text
     push();
     fill('wheat');
     textAlign(LEFT);
     textFont(font);
-    text(int(speedBar), -350, -350);
+    text("Health: " + int(ship.health), -100, -350);
     pop();
 
+    // speed bar text
+    push();
+    fill('wheat');
+    textAlign(LEFT);
+    textFont(font);
+    text("Speed: " + int(speedBar), -350, -350);
+    pop();
 
+    //time tracker
     time = time + 1;
     milliseconds = millis();
     seconds = milliseconds / 1000;
-
     push();
     fill('pink');
     textAlign(RIGHT);
@@ -100,6 +159,7 @@ function draw() {
     text((int(seconds)), 350, -350);
     pop();
 
+    // controls
     if (keyIsDown(LEFT_ARROW)) {
         ship.moveSideways(-1);
     }
@@ -121,11 +181,47 @@ function draw() {
         ship.speedUp();
     }
 
+    // if (keyIsDown(81)) {
+    //     ship.shootPhaser();
+    // }
+
+    // camera
     translate(0, 0, -ship.z - 50);
 
+    // render ship
     ship.render();
     push();
     ship.run();
     pop();
+}
+
+function keyPressed() {
+    if (keyCode === 81){
+        ship.shootPhaser();
+    }
+}
+
+function gameOver() {
+    stage = 0;
+}
+
+function draw() {
+    background(13);
+    lights();
+
+    if (mouseIsPressed == true) {
+        stage = 1;
+        console.log(stage);
+    }
+
+    if (stage == 0) {
+        menu();
+    }
+    if (stage == 1) {
+        game();
+    }
+
+
+
 }
 
