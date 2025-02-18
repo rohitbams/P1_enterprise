@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// http://codingtra.in
-// http://patreon.com/codingtrain
-// Code for: https://youtu.be/17WoOqgXsRM
-
 function Star() {
     this.x = random(-width, width);
     this.y = random(-height, height);
@@ -21,14 +16,19 @@ function Star() {
     }
   
     this.show = function() {
-      fill(255);
+
+      let redValue = random(255);
+      let greenValue = random(255);
+      let blueValue = random(255);
+
+      fill(redValue, greenValue, blueValue);
       noStroke();
   
       let sx = map(this.x / this.z, 0, 1, 0, width);
       let sy = map(this.y / this.z, 0, 1, 0, height);
       //console.log("this.x/this.z: " + this.x/this.z)
 
-      let r = map(this.z, 0, width, 2, 0);
+      let r = map(this.z, 0, width, 3, 0);
       ellipse(sx, sy, r, r);
   
       let prevX = map(this.x / this.prevZ, 0, 1, 0, width);
@@ -37,7 +37,7 @@ function Star() {
       this.prevZ = this.z;
   
       //console.log(r);
-      stroke(255);
+      stroke(redValue, greenValue, blueValue);
       line(prevX, prevY, sx, sy);
   
     }

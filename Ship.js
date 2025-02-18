@@ -4,10 +4,10 @@ class Ship {
         this.y = y;
         this.z = z;
         this.size = 25;
-        this.speedY = 0;
+        this.speedY = 10;
         this.speed = 0;
-        this.sidewaysSpeed = 10;
-        this.upDownSpeed = 5;
+        this.sidewaysSpeed = 120;
+        this.upDownSpeed = 120;
         this.health = 100;
         //this.projectile;
         // this.acceleration = 1/this.mass * force;
@@ -17,47 +17,52 @@ class Ship {
     }
     speedUp() {
         // add warp speed!!!
-        for (let i = 0; i < 12; i++) {
-            if (speedBar <= 240) {
-                speedBar = (speedBar + 0.05);
+        for (let i = 0; i < 24; i++) {
+            if (speedBar < 360) {
+                speedBar = (speedBar + 1);
             }
             ship.speed = speedBar;
         }
     }
     slowDown() {
-        for (let i = 0; i < 28; i++) {
+        for (let i = 0; i < 12; i++) {
             if (speedBar > 0) {
-                speedBar = (speedBar - 0.05);
+                speedBar = (speedBar - 1);
             }
             ship.speed = speedBar;
         }
     }
     run() {
-       // this.z = this.z - this.speed;
+        // this.z = this.z - this.speed;
     }
+    // coordinate plane
+    // (-x,-y) | (x,-y)
+    // (-x, y) | (x, y)
     moveSideways(direction) {
-        this.x += this.sidewaysSpeed * direction;
+        if (this.x > -400 && this.x < 400) {
+            this.x += this.sidewaysSpeed * direction;
+        }
     }
+
     moveUpDown(direction) {
-        this.y += this.upDownSpeed * direction;
+        if (this.y > -400 && this.y < 400) {
+            this.y += this.upDownSpeed * direction;
+        }
     }
-    
+
     takeDamage() {
-        //console.log("ship x, y: " + ship.x + " " + ship.y);
-        //console.log("block x, y: " + block.x + " " + block.y);
+        if (this.health > 0 ) {
         this.health = this.health - 10;
-            //health = this.health;
-            console.log(this.health);
+        }
+        if (this.health < 1) {
+            stage = 2;
+        }
+        // port.write("s");
+        // console.log(this.health);
     }
 
     shootProjectile() {
-            projectile.show();
-    }
-
-    die() {
-        if (ship.health == 0) {
-            gameOver();
-        }
+        projectile.show();
     }
 
     render() {
@@ -66,8 +71,6 @@ class Ship {
         normalMaterial();
         // ambientMaterial(255);
         // stroke(1);
-    
-
         translate(this.x, this.y, this.z);
         rotateX(135);
         brightness('white');
