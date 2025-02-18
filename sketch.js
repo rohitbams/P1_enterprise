@@ -69,7 +69,7 @@ function setup() {
     // (-x,-y) | (x,-y)
     // (-x, y) | (x, y)
     createCanvas(800, 800, WEBGL);
-    debugMode();
+    // debugMode();
     //port = createSerial();
     textSize(20);
 
