@@ -11,6 +11,8 @@
 // add shields for taking damage
 // add micro:bit sound for enemy hit and shoots
 // make the blocks come to you even if the ship is stationary
+// add difficulty
+// make energy blasts disappear when near ship's x and y axis
 
 
 
