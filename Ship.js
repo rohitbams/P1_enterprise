@@ -6,8 +6,8 @@ class Ship {
         this.size = 25;
         this.speedY = 10;
         this.speed = 10;
-        this.sidewaysSpeed = 120;
-        this.upDownSpeed = 120;
+        this.sidewaysSpeed = 10;
+        this.upDownSpeed = 10;
         this.health = 100;
         //this.projectile;
         // this.acceleration = 1/this.mass * force;
@@ -17,7 +17,7 @@ class Ship {
     }
     speedUp() {
         // add warp speed!!!
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 12; i++) {
             if (speedBar < 360) {
                 speedBar = (speedBar + 1);
             }
@@ -25,7 +25,7 @@ class Ship {
         }
     }
     slowDown() {
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 12; i++) {
             if (speedBar > 0) {
                 speedBar = (speedBar - 1);
             }
@@ -38,25 +38,25 @@ class Ship {
     // coordinate plane
     // (-x,-y) | (x,-y)
     // (-x, y) | (x, y)
-    // moveSideways(direction) {
-    //     if (this.x > -400 && this.x < 400) {
-    //         this.x += this.sidewaysSpeed * direction;
-    //     }
+    moveSideways(direction) {
+        if (this.x > -400 && this.x < 400) {
+            this.x += this.sidewaysSpeed * direction;
+        }
+    }
+    // moveOnXAxis(){
+    //     this.x = xMap;
+    //     // console.log(this.x)
     // }
-    moveOnXAxis(){
-        this.x = xMap;
-        // console.log(this.x)
-    }
-    moveOnYAxis(){
-        this.y = yMap;
-        // console.log(y[0]);
-    }
+    // moveOnYAxis(){
+    //     this.y = yMap;
+    //     // console.log(y[0]);
+    // }
 
-    // moveUpDown(direction) {
-    //     if (this.y > -400 && this.y < 400) {
-    //         this.y += this.upDownSpeed * direction;
-    //     }
-    // }
+    moveUpDown(direction) {
+        if (this.y > -400 && this.y < 400) {
+            this.y += this.upDownSpeed * direction;
+        }
+    }
 
     takeDamage() {
         if (this.health > 0 ) {

@@ -67,16 +67,16 @@ function setup() {
     createCanvas(800, 800, WEBGL);
     // debugMode();
 
-    port = createSerial();
+    // port = createSerial();
     
 
-    let usedPorts = usedSerialPorts();
-    if (usedPorts.length > 0) {
-        port.open(usedPorts[0], 115200);
-    }
+    // let usedPorts = usedSerialPorts();
+    // if (usedPorts.length > 0) {
+    //     port.open(usedPorts[0], 115200);
+    // }
 
-    connectBtn = createButton("Connect to Micro:bit");
-    connectBtn.mousePressed(connectBtnClick);
+    // connectBtn = createButton("Connect to Micro:bit");
+    // connectBtn.mousePressed(connectBtnClick);
 
     textSize(20);
 
@@ -93,13 +93,13 @@ function setup() {
 }
 
 
-function connectBtnClick() {
-    if (!port.opened()) {
-        port.open("MicroPython", 115200);
-    } else {
-        port.close();
-    }
-}
+// function connectBtnClick() {
+//     if (!port.opened()) {
+//         port.open("MicroPython", 115200);
+//     } else {
+//         port.close();
+//     }
+// }
 
 function menu() {
 {   push();
@@ -137,37 +137,38 @@ function menu() {
     image(enterpriseMenu, -220, -40, 550 / 1.2, 414 / 1.2);
     pop();}
 
-    let str = port.read();
+    // let str = port.read();
     if (str.length > 0) {
-        if (mouseIsPressed == true || str.includes("a") || str.includes("b")) {
+        // if (mouseIsPressed == true || str.includes("a") || str.includes("b")) {
+        if (mouseIsPressed == true) {
             stage = 1;
             // console.log(stage);
         }
-        port.clear();
+        // port.clear();
     }
 }
 // function getXYValues() {
 //     getXValues();
 //     getYValues();
 // }
-let x = 0;
+// let x = 0;
 // function getXValues() {
-//     let str = port.read();
-//     let accValues = str.split(":");
-//     //  console.log(x[0]);
-//      let xArr = [10];
+// //     let str = port.read();
+// //     let accValues = str.split(":");
+// //     //  console.log(x[0]);
+// //      let xArr = [10];
 
-//      if (accValues[0] == "x") {
-//         for (let i = 0; i < xArr.length; i++) {
-//             xArr[i] = xAccValues[1];
-//             // console.log?(xArr)
-//             x = xArr[i].split(" ");
-//             // console.log(x[0]);
-//         }
-//         // console.log(xArr);
-//     }
-// } 
-let y = 0;
+// //      if (accValues[0] == "x") {
+// //         for (let i = 0; i < xArr.length; i++) {
+// //             xArr[i] = xAccValues[1];
+// //             // console.log?(xArr)
+// //             x = xArr[i].split(" ");
+// //             // console.log(x[0]);
+// //         }
+// //         // console.log(xArr);
+// //     }
+// // } 
+// let y = 0;
 // function getYValues() {
 //     let str = port.read();
 //     let accValues = str.split(":");
@@ -184,41 +185,41 @@ let y = 0;
 //    }
 // } 
 
-let xMap = 0;
-let yMap = 0;
-let xAvg = [], yAvg = [];
-let xSum = 0, ySum = 0;
+// let xMap = 0;
+// let yMap = 0;
+// let xAvg = [], yAvg = [];
+// let xSum = 0, ySum = 0;
 
 
-function readMicroBit() {
+// function readMicroBit() {
 
-    let str = port.read();
-    let accValues = str.split(":");
+//     let str = port.read();
+//     let accValues = str.split(":");
     
-    // x
-     let xArr = [10];
-     if (accValues[0] == "x") {
-        for (let i = 0; i < 10; i++) {
-            xArr[i] = accValues[1];
-            x = xArr[i].split(" ");
-        } 
-    }
+//     // x
+//      let xArr = [10];
+//      if (accValues[0] == "x") {
+//         for (let i = 0; i < 10; i++) {
+//             xArr[i] = accValues[1];
+//             x = xArr[i].split(" ");
+//         } 
+//     }
 
-    // y
-    let yArr = [10];
-    if (accValues[0] == "y") {
-       for (let i = 0; i < 10; i++) {
-            yArr[i] = accValues[1];
-            y = yArr[i].split(" ");
-       }
-    }
+//     // y
+//     let yArr = [10];
+//     if (accValues[0] == "y") {
+//        for (let i = 0; i < 10; i++) {
+//             yArr[i] = accValues[1];
+//             y = yArr[i].split(" ");
+//        }
+//     }
 
-    xMap = map(x[0], -1023, 1023, -400, 400);
-    yMap = map(y[0], -1023, 1023, -400, 400);
+//     xMap = map(x[0], -1023, 1023, -400, 400);
+//     yMap = map(y[0], -1023, 1023, -400, 400);
     
-    port.clear();
+//     port.clear();
         
-}
+// }
 
 
 function drawStars() {
@@ -325,31 +326,31 @@ function game() {
 
 function controls() {
     // controls
-    readMicroBit();
-    ship.moveOnXAxis();
-    ship.moveOnYAxis();
+    // readMicroBit();
+    // ship.moveOnXAxis();
+    // ship.moveOnYAxis();
     // controls for the keyboard 
     {
-    //     if (keyIsDown(LEFT_ARROW)) {
-    //         ship.moveSideways(-1);
-    //     }
-    //     if (keyIsDown(RIGHT_ARROW)) {
-    //         ship.moveSideways(1);
-    //     }
+        if (keyIsDown(LEFT_ARROW)) {
+            ship.moveSideways(-1);
+        }
+        if (keyIsDown(RIGHT_ARROW)) {
+            ship.moveSideways(1);
+        }
 
-    //     if (keyIsDown(UP_ARROW)) {
-    //         ship.moveUpDown(-1);
-    //     }
-    //     if (keyIsDown(DOWN_ARROW)) {
-    //         ship.moveUpDown(1);
-    //     }
+        if (keyIsDown(UP_ARROW)) {
+            ship.moveUpDown(-1);
+        }
+        if (keyIsDown(DOWN_ARROW)) {
+            ship.moveUpDown(1);
+        }
 
-    //     if (keyIsDown(83)) { 
-    //         ship.slowDown();
-    //     }
-    //     if (keyIsDown(87)) {
-    //         ship.speedUp();
-    //     }
+        if (keyIsDown(83)) { 
+            ship.slowDown();
+        }
+        if (keyIsDown(87)) {
+            ship.speedUp();
+        }
     }
 }
 
@@ -386,19 +387,19 @@ function gameOver() {
     }
 }
 
-function changeConnectBtnHtml() {
-    if (!port.opened()) {
-        connectBtn.html("Connect to Micro:bit");
-    } else {
-        connectBtn.html("Disconnect");
-    }
-}
+// function changeConnectBtnHtml() {
+//     if (!port.opened()) {
+//         connectBtn.html("Connect to Micro:bit");
+//     } else {
+//         connectBtn.html("Disconnect");
+//     }
+// }
 
 function draw() {
     background(13);
     lights();
 
-    changeConnectBtnHtml();
+    // changeConnectBtnHtml();
 
     if (mouseIsPressed == true) {
         stage = 1;
