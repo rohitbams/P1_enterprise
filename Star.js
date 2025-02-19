@@ -28,7 +28,7 @@ function Star() {
       let sy = map(this.y / this.z, 0, 1, 0, height);
       //console.log("this.x/this.z: " + this.x/this.z)
 
-      let r = map(this.z, 0, width, 3, 0);
+      let r = map(this.z, 0, width, 4, 0);
       ellipse(sx, sy, r, r);
   
       let prevX = map(this.x / this.prevZ, 0, 1, 0, width);

@@ -15,7 +15,6 @@
 // make energy blasts disappear when near ship's x and y axis
 
 
-
 // let length = 180;
 let ship;
 // let projectile;
@@ -53,6 +52,8 @@ let connectBtn;
 let port;
 let font;
 
+
+
 function preload() {
     font = loadFont("assets/LeagueMono-Regular.otf");
     enterprise = loadModel("assets/enterprise/enterprise.obj", true);
@@ -64,8 +65,19 @@ function setup() {
     // (-x,-y) | (x,-y)
     // (-x, y) | (x, y)
     createCanvas(800, 800, WEBGL);
-    debugMode();
-    //port = createSerial();
+    // debugMode();
+
+    port = createSerial();
+    
+
+    let usedPorts = usedSerialPorts();
+    if (usedPorts.length > 0) {
+        port.open(usedPorts[0], 115200);
+    }
+
+    connectBtn = createButton("Connect to Micro:bit");
+    connectBtn.mousePressed(connectBtnClick);
+
     textSize(20);
 
     ship = new Ship(50, 150, 0);
@@ -79,6 +91,7 @@ function setup() {
         blocks[i] = new Block();
     }
 }
+
 
 function connectBtnClick() {
     if (!port.opened()) {
@@ -117,7 +130,7 @@ function menu() {
     fill(193,199,48);
     textFont(font);
     textSize(16);
-    text("Controls: \n\n Press A to accelarate \nPress B to decelerate", 0, -110);
+    text("Controls: \n\n Press A to accelerate \nPress B to decelerate", 0, -110);
     pop();}
     
 {   push();
@@ -133,39 +146,80 @@ function menu() {
         port.clear();
     }
 }
-
-
-// function microBitReceivedMessage(message) {
-//     xTilt = map(message, -90, 90, 0, width - 90);
-//     yTilt = map(message, -90, 90, 0, height - 90);
+// function getXYValues() {
+//     getXValues();
+//     getYValues();
 // }
+let x = 0;
+// function getXValues() {
+//     let str = port.read();
+//     let accValues = str.split(":");
+//     //  console.log(x[0]);
+//      let xArr = [10];
+
+//      if (accValues[0] == "x") {
+//         for (let i = 0; i < xArr.length; i++) {
+//             xArr[i] = xAccValues[1];
+//             // console.log?(xArr)
+//             x = xArr[i].split(" ");
+//             // console.log(x[0]);
+//         }
+//         // console.log(xArr);
+//     }
+// } 
+let y = 0;
+// function getYValues() {
+//     let str = port.read();
+//     let accValues = str.split(":");
+//     let yArr = [10];
+
+//     if (accValues[0] == "y") {
+//        for (let i = 0; i < yArr.length; i++) {
+//            yArr[i] = accValues[1];
+//            // console.log?(xArr)
+//            y = yArr[i].split(" ");
+//            console.log(y[0]);
+//        }
+//        // console.log(xArr);
+//    }
+// } 
+
+let xMap = 0;
+let yMap = 0;
+let xAvg = [], yAvg = [];
+let xSum = 0, ySum = 0;
 
 
 function readMicroBit() {
+
     let str = port.read();
-    // console.log(str);
-    if (str.length > 0) {
-        if (str.includes("a")) {
-            ship.speedUp();
-        }
-        if (str.includes("b")) {
-            ship.slowDown();
-        }
-        if (str.includes("x") && str.includes("-")) {
-            ship.moveSideways(-0.12);
-        }
-        if (str.includes("x") && !str.includes("-")) {
-            ship.moveSideways(0.12)
-        }
-        if (str.includes("y") && str.includes("-")) {
-            ship.moveUpDown(-0.12);
-        }
-        if (str.includes("y") && !str.includes("-")) {
-            ship.moveUpDown(0.12);
-        }
-        port.clear();
+    let accValues = str.split(":");
+    
+    // x
+     let xArr = [10];
+     if (accValues[0] == "x") {
+        for (let i = 0; i < 10; i++) {
+            xArr[i] = accValues[1];
+            x = xArr[i].split(" ");
+        } 
     }
+
+    // y
+    let yArr = [10];
+    if (accValues[0] == "y") {
+       for (let i = 0; i < 10; i++) {
+            yArr[i] = accValues[1];
+            y = yArr[i].split(" ");
+       }
+    }
+
+    xMap = map(x[0], -1023, 1023, -400, 400);
+    yMap = map(y[0], -1023, 1023, -400, 400);
+    
+    port.clear();
+        
 }
+
 
 function drawStars() {
     push();
@@ -191,7 +245,6 @@ function drawBlocks() {
             blockX = int(block.x);
             blockY = int(block.y);
             blockZ = int(blockZ);
-
 
             if (
                 blockX >= ship.x - 10 && blockX <= ship.x + 10 &&
@@ -273,28 +326,30 @@ function game() {
 function controls() {
     // controls
     readMicroBit();
+    ship.moveOnXAxis();
+    ship.moveOnYAxis();
+    // controls for the keyboard 
+    {
+    //     if (keyIsDown(LEFT_ARROW)) {
+    //         ship.moveSideways(-1);
+    //     }
+    //     if (keyIsDown(RIGHT_ARROW)) {
+    //         ship.moveSideways(1);
+    //     }
 
-    {    
-        if (keyIsDown(LEFT_ARROW)) {
-            ship.moveSideways(-1);
-        }
-        if (keyIsDown(RIGHT_ARROW)) {
-            ship.moveSideways(1);
-        }
+    //     if (keyIsDown(UP_ARROW)) {
+    //         ship.moveUpDown(-1);
+    //     }
+    //     if (keyIsDown(DOWN_ARROW)) {
+    //         ship.moveUpDown(1);
+    //     }
 
-        if (keyIsDown(UP_ARROW)) {
-            ship.moveUpDown(-1);
-        }
-        if (keyIsDown(DOWN_ARROW)) {
-            ship.moveUpDown(1);
-        }
-
-        if (keyIsDown(83)) { 
-            ship.slowDown();
-        }
-        if (keyIsDown(87)) {
-            ship.speedUp();
-        }
+    //     if (keyIsDown(83)) { 
+    //         ship.slowDown();
+    //     }
+    //     if (keyIsDown(87)) {
+    //         ship.speedUp();
+    //     }
     }
 }
 
@@ -331,15 +386,19 @@ function gameOver() {
     }
 }
 
-function draw() {
-    background(13);
-    lights();
-
+function changeConnectBtnHtml() {
     if (!port.opened()) {
         connectBtn.html("Connect to Micro:bit");
     } else {
         connectBtn.html("Disconnect");
     }
+}
+
+function draw() {
+    background(13);
+    lights();
+
+    changeConnectBtnHtml();
 
     if (mouseIsPressed == true) {
         stage = 1;
